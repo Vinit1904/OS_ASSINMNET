@@ -1,0 +1,422 @@
+﻿
+1. Write a script to create 10 directories, say a1,a2,...,a10
+Report error if a directory/file exists with the same name.
+
+#!/bin/bash
+
+for i in {1..10}
+do
+        mkdir "b$i"                                                                                                                   
+done   
+
+
+
+
+
+2. Write a menu based script to perform following string operations
+
+a) To find length of a string
+#!/bin/bash
+
+echo "Enter String Input"
+
+read str
+
+length=${#str}
+
+echo "$str = $length"
+
+
+c) Copying string
+
+#!/bin/bash
+echo "Enter string";
+read str;
+echo "original string=$str"
+
+for (( i=0 ; i < ${#str} ; i++ ));
+do
+        y[i]=${str:i:${#str}};
+        #echo "$y"
+done
+echo "Copied_String=$y"
+
+
+
+d) Concatenation of strings
+
+#!/bin/bash
+echo "Enter first string";
+
+read str1;
+
+echo "Enter second string"
+
+read str2;
+
+str3="$str1$str2"
+
+echo "$str2";
+	
+
+e) Compare two strings
+
+#!/bin/bash
+
+echo "Input1="
+read str1;
+
+echo "Input2="
+read str2;
+
+
+if [ "$str1" = "$str2" ]; then
+        echo "String is equal"
+else
+        echo "String is unequal"
+fi
+
+
+
+f) Reversing a string
+
+#!/bin/bash
+echo "Enter string";
+read str;
+echo "original string=$str"
+
+len=${#str}
+for((i=$len-1;i>=0;i--));
+do
+        rev="$rev${str:$i:1}";
+done
+
+echo "reversed-output: $rev"
+
+
+
+
+3.Write a shell script to rename all files in the current directory with numeric continuous value(Warning: Do this in a personal folder. Don't use Home directory) 
+
+#!/bin/bash
+i=1
+for file in *.txt*;
+do
+        mv "$file" "$i.txt"
+        ((i=i+1));
+done
+ 
+
+
+
+
+4. Write a script that print environment variable(Print $HOME,$PATH,$SHELL,$HISTORY,$LOGNAME,$TERM)
+
+
+
+5. Write a shell script to print all files permissions in current directory(Not name or other details)(Use cut commands)
+
+1) #!/bin/b
+
+for file in rename/*
+do
+  ls -l "$file">>cat.txt
+
+done
+
+//excute this
+
+>>> cut -b 1-9 cat.txt  
+
+simple command
+find -type f -name "*.sh"
+
+6. Write a shell script to print all files permissions and name of file
+
+1) #!/bin/b
+
+for file in rename/*
+do
+  ls -l "$file">>cat.txt
+
+done
+
+//excute this
+cut -b 1-9,38- cat.txt
+
+
+7.Write a shell script to print all files name and size greater than 5K
+
+ find -type f -name "*.txt" -size +5k
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. Write a script To check given year is leap or not.
+
+echo "Enter the year (YYYY)"
+read year
+
+if [ $((year % 4)) -eq 0 ]
+then
+  if [ $((year % 100)) -eq 0 ]
+    then
+    if [ $((year % 400)) -eq 0 ]
+          then
+        echo "its a leap year"
+    else
+           echo "its not a leap year"
+    fi
+  else
+  echo "Its a leap year"
+  fi
+else
+ echo "its not a leap year"
+
+fi
+
+
+2. Write a script to print day of the week using
+	
+a) elif	
+
+echo "enter a number"
+read n
+                                                                                                                        if [ $n == 1 ]
+then
+        echo "monday"
+elif [ $n == 2 ]
+then
+        echo "Tuesday"
+elif [ $n == 3 ]
+then
+        echo "Wendsday"
+elif [ $n == 4 ]
+then
+        echo "Thursday"
+elif [ $n == 5 ]
+then
+        echo "Friday"
+elif [ $n == 6 ]
+then
+        echo "Saturday"
+elif [ $n == 7 ]
+then
+        echo "Sunday"
+else
+        echo "incorrect"
+fi
+
+
+
+b) case
+
+echo "enter a number"
+read n
+case $n in
+        1) echo "Sunday" ;;
+        2) echo "Monday" ;;
+        3) echo "Tuesday" ;;
+        4) echo "Wednesday" ;;
+        5) echo "Thursday" ;;
+        6) echo "Friday" ;;
+        7) echo "Saturday" ;;
+        *) echo "enter value between 1 to 7" ;;
+esac
+   
+
+
+ 
+
+3. a) Write a script to find biggest of three no.s
+
+
+#!/bin/bash
+
+echo "enter no1:"
+read no1;
+echo "enter no2:"
+read no2;
+echo "enter no3"
+read no3;
+
+if [ $no1 -gt $no2 ]
+then
+        if [ $no1 -gt $no3 ]
+        then
+                echo "this ${no1} is greater"
+        else
+                echo "${no3} is greater"
+        fi
+
+else
+        if [ $no2 -gt $no3 ]
+        then
+                echo "$no2 is greater"
+        else
+                echo "$no3 is greater"
+        fi
+fi
+	
+
+   b) To find avg of 3 no.s, read no.s from keyboard
+
+#!/bin/bash
+
+echo "enter no1:"
+read no1;
+echo "enter no2:"
+read no2;
+echo "enter no3"
+read no3;
+
+
+sum=$(( no1 + no2 + no3 ))
+avg=$(( sum/3 ));
+
+echo "Average of three number $avg"
+
+
+
+
+4. Write a program to check wahether given no.is even or odd
+
+#!/bin/bash
+
+echo "Enter number"
+
+read no
+
+if (( $no % 2 == 0 ))
+then
+        echo "even number"                                                                                              else
+        echo "odd number"                                                                                               fi
+
+
+
+5. Write a program to print calendar of current month in next year,previous years.
+	For eg:-sep 2014,sep 2012 if current month is sep 2013	
+
+#!/bin/bash
+echo $( cal -m 9 2019 );
+
+echo $( cal  -m 9 2021 );
+
+
+
+6. Write a program to find sum and product of two no.s using 
+	
+let num1=2;
+let num2=3;
+
+let res=$num1+$num2;
+let prod=$num1*$num2;
+
+echo "let sum result =$res"
+echo "let product result =$prod"
+
+#sum= $(expr "$no1" + "$no2")
+sum=$(expr "$num1" + "$num2")
+mul=$(expr $((num1*num2)))
+
+#echo "$res";
+echo "expr sum= $sum"
+echo "expr product= $mul"
+
+
+#total=$(( num1+num2 ))
+
+x=`echo $num1+$num2 | bc -l`
+y=`echo $num1*$num2 | bc -l`
+echo "bc sum= $x";
+echo "bc product= $y"
+
+~                                                                                                                       ~             
+7. Write a script to generate Fibonacci series.
+
+#!/bin/bash
+
+
+echo "Enter the Value";
+
+read val;
+
+a=0;
+b=1;
+
+#i=1;
+
+for (( i=0; i<val; i++ ))
+do
+        echo  "$a "
+         fn=$((a + b))
+        a=$b
+        b=$fn
+done
+
+
+
+8. Write a shell script to reverse the single strings. 
+#!/bin/bash
+echo "Enter string";
+read str;
+echo "original string=$str"
+
+len=${#str}
+for((i=$len-1;i>=0;i--));
+do
+        rev="$rev${str:$i:1}";
+done
+
+echo "reversed-output: $rev"
+
+
+
+
+9.Write a shell script to reverse the list of strings and reverse each string further in the list.
+
+
+
+
+
+10. Write a shell script to print the reverse of an input number.
+
+
+#!/bin/bash
+echo "Enter string";
+read str;
+echo "original string=$str"
+
+len=${#str}
+for((i=$len-1;i>=0;i--));
+do
+        rev="$rev${str:$i:1}";
+done
+
+echo "reversed-output: $rev"
+
+
+
+
+
+
+
+
+
+1.Write a shell script to validate password strength. Here are a few assumptions for the password string.
+Length  – minimum of 8 characters.
+Contain both alphabet and number.
+Include both the small and capital case letters.
+If the password doesn’t comply with any of the above conditions, then the script should report it as a <Weak Password>.
+
