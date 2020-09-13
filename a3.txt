@@ -3,7 +3,6 @@
 
 1)
 
-
 #include <stdio.h>
 #include <unistd.h>
 
@@ -28,28 +27,107 @@ int main(){
 
 
 
-2)
-#include <stdio.h>
-#include <unistd.h>
 
+
+2)2.	Scheduling functions 
+Write a program in C/CPP to check the scheduling policy used by the process and its priority. 
+	(Hint(functions to be used) : sched_getscheduler, getpid) 
+-->
+#include<sched.h>
+#include<iostream>
+#include<string.h>
+#include<sys/types.h>
+#include<unistd.h>
+using namespace std;
 int main(){
-	pid_t pid;
-	
-	pid = fork();
 
-	if(pid==0){
-		printf("Child process is running... %d \n", getpid());
-		printf(" having scheduling policy... %d \n",sched_getscheduler());
-	}
-	else if (pid > 0){
-	    
-		printf("Parent process is running... %d \n", getpid());
-		printf(" having scheduling policy... %d  \n",sched_getscheduler());
-	    sleep(5);
-	    
-	} 
-	else{
-		printf("Error...Something went wrong");
-	}
+        int policy= sched_getscheduler(getpid());
+        switch(policy)
+        {
+                case SCHED_OTHER: cout<<"process policy= SCHED_OTHER"<<endl;
+                                  break;
+                case SCHED_RR: cout<<"process policy= SCHED_RR"<<endl;
+                               break;
+                case SCHED_FIFO: cout<<"process policy= SCHED_FIFO"<<endl;
+                                 break;
+                default: cout<<"unknown policy"<<endl;
+
+        }
 }
 
+
+
+
+4)#include<bits/stdc++.h>
+#include<iostream>
+#include<queue>
+#include<vector>
+using namespace std;
+class P{
+  public:
+  string process;
+  double arrival_time;
+  double burst_time;
+};
+queue<P> Q;
+void fcfs(){
+ int i = 0;
+ double currentTime = 0;
+ double completionTime = 0;
+ vector<double> wait_time;
+ vector<double> turnaround_time;
+ 
+ while(!Q.empty()){
+
+   P ob = Q.front();
+   if(currentTime < ob.arrival_time){
+      currentTime = ob.arrival_time;
+   }
+   completionTime = currentTime + ob.burst_time;
+   currentTime = completionTime;
+  turnaround_time.push_back(completionTime - ob.arrival_time);
+  wait_time.push_back(turnaround_time[i] - ob.burst_time);
+  cout<<"tt_i"<<turnaround_time[i]<<endl;
+  cout<<"b-time"<<ob.burst_time<<endl;
+  i++;
+  Q.pop();
+ }
+ double avg_tt = accumulate(turnaround_time.begin(), turnaround_time.end(), 0)/turnaround_time.size();
+
+ double avg_wt = accumulate(wait_time.begin(),wait_time.end(), 0)/wait_time.size();
+ /*double sum_tt = 0;
+ double sum_wt = 0;
+
+ for(int i = 0; i < turnaround_time.size(); i++){
+    sum_tt += turnaround_time[i];
+    sum_wt += wait_time[i];
+ }
+ 
+  double avg_tt = sum_tt/turnaround_time.size();
+  double avg_wt = sum_wt/wait_time.size();*/
+
+cout<<"average turnaround time:"<<<<avg_tt<<" "<<"average wait-time:"<<avg_wt<<endl;
+//cout<<"tt: "<<accumulate(turnaround_time.begin(), turnaround_time.end(), 0)<<endl;
+//cout<<"wt: "<<accumulate(turnaround_time.begin(), turnaround_time.end(), 0)<<endl;
+}
+int main(){
+  double arrival_time,burst_time;
+  string process;
+  while(1){
+    P obj;
+    cout<<"Enter name of the process"<<endl;
+    cin>>process;
+    if(process == "end")
+     break;
+    obj.process = process;
+    cout<<"Enter arrival time"<<endl;
+    cin>>arrival_time;
+    obj.arrival_time = arrival_time;
+    cout<<"Enter burst_time"<<endl;
+    cin>>burst_time;
+    obj.burst_time = burst_time;
+    Q.push(obj);
+  }
+  fcfs();
+  return 0;
+} 
